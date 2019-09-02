@@ -1,20 +1,32 @@
 class App extends React.Component {
   state = {
-    text: ""
+    value: ""
   };
 
-  handleClick = () => {
+  handleInputChange = e => {
     this.setState({
-      text: this.state.text + "a"
+      value: e.target.value
+    });
+  };
+
+  handleButtonClear = () => {
+    this.setState({
+      value: ""
     });
   };
 
   render() {
     return (
-      <div>
-        <button onClick={this.handleClick}>Dodaj "A"</button>
-        <h1>{this.state.text}</h1>
-      </div>
+      <React.Fragment>
+        <input
+          value={this.state.value}
+          onChange={this.handleInputChange}
+          type="text"
+          placeholder="Wpisz"
+        />
+        <button onClick={this.handleButtonClear}>Reset</button>
+        <h1 className="title">{this.state.value.toUpperCase()}</h1>
+      </React.Fragment>
     );
   }
 }
