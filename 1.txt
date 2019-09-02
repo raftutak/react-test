@@ -1,0 +1,42 @@
+// komponent funkcyjny, bez stanu
+
+const Header = () => {
+  return (
+    <div>
+      <h1>Witaj na stronie</h1>
+    </div>
+  );
+};
+
+// komponent klasowy, stanowy
+
+class Article extends React.Component {
+  //   state = {
+  //     number: 0
+  //   };
+
+  render() {
+    return (
+      <section>
+        <h2>Artykuł na stronie</h2>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi
+          numquam dicta, accusamus, quam nesciunt veniam veritatis vero aliquid
+          inventore quo, nobis voluptatem quasi magni voluptate iste rem
+          voluptatum. Soluta, repellendus.
+        </p>
+      </section>
+    );
+  }
+}
+
+const App = () => {
+  return (
+    <div>
+      <Header />
+      <Article />
+    </div>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById("root"));
