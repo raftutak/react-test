@@ -1,0 +1,31 @@
+class Message extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      messageIsActive: false
+    };
+  }
+
+  handleClick = () => {
+    this.setState({
+      messageIsActive: !this.state.messageIsActive
+    });
+  };
+
+  render() {
+    console.log(this.state.messageIsActive);
+    const text = "Lorem ipsum";
+
+    return (
+      <React.Fragment>
+        <button onClick={this.handleClick}>
+          {this.state.messageIsActive ? "true" : "false"}
+        </button>
+        {this.state.messageIsActive ? <p>{text}</p> : null}
+        {/* <p>{this.state.messageIsActive && text}</p> */}
+      </React.Fragment>
+    );
+  }
+}
+
+ReactDOM.render(<Message />, document.getElementById("root"));

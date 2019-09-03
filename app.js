@@ -1,34 +1,63 @@
-class App extends React.Component {
+class Counter extends React.Component {
   state = {
-    value: ""
+    count: 0,
+    result: this.props.result
   };
 
-  handleInputChange = e => {
-    this.setState({
-      value: e.target.value
-    });
+  handleMath = (type, number) => {
+    if (type === "increase") {
+      this.setState({
+        count: this.state.count + 1,
+        result: this.state.result + number
+      });
+    } else if (type === "decrease") {
+      this.setState({
+        count: this.state.count + 1,
+        result: this.state.result - number
+      });
+    } else if (type === "reset") {
+      this.setState({
+        counts: (this.state.count = 0),
+        result: (this.state.result = this.props.result)
+      });
+    }
   };
 
-  handleButtonClear = () => {
-    this.setState({
-      value: ""
-    });
-  };
+  // handleIncrease = () => {
+  //   this.setState({
+  //     count: this.state.count + 1,
+  //     result: this.state.result + 1
+  //   });
+  // };
+
+  // handleDecrease = () => {
+  //   this.setState({
+  //     count: this.state.count + 1,
+  //     result: this.state.result - 1
+  //   });
+  // };
+
+  // handleReset = () => {
+  //   this.setState({
+  //     count: 0,
+  //     result: 0
+  //   });
+  // };
 
   render() {
     return (
       <React.Fragment>
-        <input
-          value={this.state.value}
-          onChange={this.handleInputChange}
-          type="text"
-          placeholder="Wpisz"
-        />
-        <button onClick={this.handleButtonClear}>Reset</button>
-        <h1 className="title">{this.state.value.toUpperCase()}</h1>
+        <button onClick={this.handleMath.bind(this, "increase", 8)}>+8</button>
+        <button onClick={this.handleMath.bind(this, "decrease", 1)}>-1</button>
+        <button onClick={this.handleMath.bind(this, "reset", null)}>
+          Reset
+        </button>
+
+        <h1>Liczba kliknięć: {this.state.count}</h1>
+        <h1>Rezultat: {this.state.result}</h1>
       </React.Fragment>
     );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<Counter result={15} />, document.getElementById("root"));
