@@ -47,17 +47,61 @@ class Counter extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <button onClick={this.handleMath.bind(this, "increase", 8)}>+8</button>
+        {/* <button onClick={this.handleMath.bind(this, "increase", 8)}>+8</button>
         <button onClick={this.handleMath.bind(this, "decrease", 1)}>-1</button>
         <button onClick={this.handleMath.bind(this, "reset", null)}>
           Reset
-        </button>
+        </button> */}
 
-        <h1>Liczba kliknięć: {this.state.count}</h1>
-        <h1>Rezultat: {this.state.result}</h1>
+        <MathButton
+          name="-10"
+          type="decrease"
+          number="10"
+          click={this.handleMath}
+        />
+
+        <MathButton
+          name="+10"
+          type="increase"
+          number="10"
+          click={this.handleMath}
+        />
+
+        <MathButton
+          name="Reset"
+          type="reset"
+          number="null"
+          click={this.handleMath}
+        />
+
+        <Result count={this.state.count} result={this.state.result} />
       </React.Fragment>
     );
   }
 }
 
-ReactDOM.render(<Counter result={15} />, document.getElementById("root"));
+const MathButton = props => {
+  const number = parseInt(props.number);
+
+  return (
+    <React.Fragment>
+      <button onClick={() => props.click(props.type, number)}>
+        {props.name}
+      </button>
+    </React.Fragment>
+  );
+};
+
+const Result = props => {
+  return (
+    <React.Fragment>
+      <h1>
+        Liczba kliknięć: {props.count} -{" "}
+        {props.count > 10 ? "over 9000" : "good"}
+      </h1>
+      <h1>Rezultat: {props.result}</h1>
+    </React.Fragment>
+  );
+};
+
+ReactDOM.render(<Counter result={0} />, document.getElementById("root"));
