@@ -1,107 +1,60 @@
-class Counter extends React.Component {
+const PositiveMessage = () => {
+  return <p>Możesz obejrzeć film!</p>;
+};
+
+const NegativeMessage = () => {
+  return <p>Nie możesz obejrzeć filmu.</p>;
+};
+
+class TicketShop extends React.Component {
   state = {
-    count: 0,
-    result: this.props.result
+    isConfirmed: false,
+    isFormSubmitted: false
   };
 
-  handleMath = (type, number) => {
-    if (type === "increase") {
-      this.setState({
-        count: this.state.count + 1,
-        result: this.state.result + number
-      });
-    } else if (type === "decrease") {
-      this.setState({
-        count: this.state.count + 1,
-        result: this.state.result - number
-      });
-    } else if (type === "reset") {
-      this.setState({
-        counts: (this.state.count = 0),
-        result: (this.state.result = this.props.result)
-      });
+  handleCheckboxValue = () => {
+    this.setState({
+      isConfirmed: !this.state.isConfirmed
+    });
+  };
+
+  displayMessage = () => {
+    if (this.state.isFormSubmitted) {
+      if (this.state.isConfirmed) {
+        return <PositiveMessage />;
+      } else {
+        return <NegativeMessage />;
+      }
+    } else {
+      return null;
     }
   };
 
-  // handleIncrease = () => {
-  //   this.setState({
-  //     count: this.state.count + 1,
-  //     result: this.state.result + 1
-  //   });
-  // };
-
-  // handleDecrease = () => {
-  //   this.setState({
-  //     count: this.state.count + 1,
-  //     result: this.state.result - 1
-  //   });
-  // };
-
-  // handleReset = () => {
-  //   this.setState({
-  //     count: 0,
-  //     result: 0
-  //   });
-  // };
+  handleFormSubmit = e => {
+    e.preventDefault(); // zablokowanie przeladowywania strony na evencie onSubmit formularza
+    this.setState.isFormSubmitted = true;
+  };
 
   render() {
     return (
-      <React.Fragment>
-        {/* <button onClick={this.handleMath.bind(this, "increase", 8)}>+8</button>
-        <button onClick={this.handleMath.bind(this, "decrease", 1)}>-1</button>
-        <button onClick={this.handleMath.bind(this, "reset", null)}>
-          Reset
-        </button> */}
-
-        <MathButton
-          name="-10"
-          type="decrease"
-          number="10"
-          click={this.handleMath}
-        />
-
-        <MathButton
-          name="+10"
-          type="increase"
-          number="10"
-          click={this.handleMath}
-        />
-
-        <MathButton
-          name="Reset"
-          type="reset"
-          number="null"
-          click={this.handleMath}
-        />
-
-        <Result count={this.state.count} result={this.state.result} />
-      </React.Fragment>
+      <>
+        <h1>Kup bilet</h1>
+        <form onSubmit={this.handleFormSubmit}>
+          <input
+            type="checkbox"
+            id="age"
+            onChange={this.handleCheckboxValue}
+            checked={this.state.isConfirmed}
+          />
+          <label htmlFor="age">Mam co najmniej 16 lat</label>
+          <br />
+          <br />
+          <button>Kup bilet</button>
+        </form>
+        {this.displayMessage()}
+      </>
     );
   }
 }
 
-const MathButton = props => {
-  const number = parseInt(props.number);
-
-  return (
-    <React.Fragment>
-      <button onClick={() => props.click(props.type, number)}>
-        {props.name}
-      </button>
-    </React.Fragment>
-  );
-};
-
-const Result = props => {
-  return (
-    <React.Fragment>
-      <h1>
-        Liczba kliknięć: {props.count} -{" "}
-        {props.count > 10 ? "over 9000" : "good"}
-      </h1>
-      <h1>Rezultat: {props.result}</h1>
-    </React.Fragment>
-  );
-};
-
-ReactDOM.render(<Counter result={0} />, document.getElementById("root"));
+ReactDOM.render(<TicketShop />, document.getElementById("root"));
